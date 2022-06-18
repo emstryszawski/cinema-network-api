@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "cinema", schema = "cinema-network")
+@Table(name = "cinema")
 public class Cinema {
     @Id
     @Column(name = "id", nullable = false)
@@ -31,4 +31,5 @@ public class Cinema {
 
     @OneToMany(mappedBy = "cinema")
     private Set<Ticket> tickets = new LinkedHashSet<>();
+
 }
