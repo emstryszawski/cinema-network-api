@@ -1,15 +1,21 @@
 package pl.edu.pjatk.cinemanetworkapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "cinema")
 public class Cinema {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", nullable = false, length = 35)
     private String name;
@@ -27,9 +33,9 @@ public class Cinema {
     private Set<ScreeningRoom> screeningRooms = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "cinema")
-    private Set<Repertoir> repertoires = new LinkedHashSet<>();
+    private Set<Repertoire> repertoires = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "cinema")
+    @JsonIgnore
     private Set<Ticket> tickets = new LinkedHashSet<>();
-
 }

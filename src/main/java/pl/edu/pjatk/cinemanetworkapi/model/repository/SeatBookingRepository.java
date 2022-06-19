@@ -2,9 +2,8 @@ package pl.edu.pjatk.cinemanetworkapi.model.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.edu.pjatk.cinemanetworkapi.model.entity.Movie;
+import pl.edu.pjatk.cinemanetworkapi.model.entity.SeatBooking;
 
 @Repository
-public interface MovieRepository extends JpaRepository<Movie, Long> {
-
+public interface SeatBookingRepository extends JpaRepository<SeatBooking, Long> {
 }

@@ -7,10 +7,11 @@ import java.time.LocalDate;
 @Table(name = "registereduser", indexes = {
         @Index(name = "customerid_idx", columnList = "customerid")
 })
-public class Registereduser {
+public class RegisteredUser {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "password", nullable = false, length = 256)
     private String password;

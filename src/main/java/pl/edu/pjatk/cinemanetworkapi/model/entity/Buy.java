@@ -1,5 +1,8 @@
 package pl.edu.pjatk.cinemanetworkapi.model.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.edu.pjatk.cinemanetworkapi.model.DeliveryMethodEnum;
 import pl.edu.pjatk.cinemanetworkapi.model.PaymentMethodEnum;
 
@@ -7,13 +10,15 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "buy", indexes = {
-        @Index(name = "buypurchaseid_idx", columnList = "purchaseid")
-})
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "buy")
 public class Buy {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "paiddate", nullable = false)
     private LocalDateTime paidDate;
@@ -28,7 +33,6 @@ public class Buy {
     @Column(name = "deliverymethod", nullable = false, length = 50)
     private DeliveryMethodEnum deliveryMethod;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "purchaseid", nullable = false)
-    private Purchase purchase;
+    @Column(name = "correlationid")
+    private Long correlationId;
 }

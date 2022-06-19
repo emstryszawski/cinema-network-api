@@ -1,35 +1,48 @@
 package pl.edu.pjatk.cinemanetworkapi.model.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "purchase", indexes = {
         @Index(name = "purchasecustomerid_idx", columnList = "customerid")
 })
 public class Purchase {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "purchasedate", nullable = false)
+    @Column(name = "purchasedate")
     private LocalDateTime purchasedate;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price", precision = 5, scale = 2)
     private Double price;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customerid", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerid")
     private Customer customer;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "purchase")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "buyid")
     private Buy buy;
 
-    @OneToMany(mappedBy = "purchase")
-    private Set<Ticket> tickets = new LinkedHashSet<>();
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "purchase")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bookingid")
     private Booking booking;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "purchase")
+    private List<Ticket> tickets;
+
+    @Column(name = "correlationid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long correlationId;
 }

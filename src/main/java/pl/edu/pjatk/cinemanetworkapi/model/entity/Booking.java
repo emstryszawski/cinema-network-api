@@ -1,24 +1,23 @@
 package pl.edu.pjatk.cinemanetworkapi.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "booking", indexes = {
-        @Index(name = "bookingpurchaseid_idx", columnList = "purchaseid")
-})
+@Getter
+@Setter
+@Table(name = "booking")
 public class Booking {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "duedate", nullable = false)
     private LocalDateTime dueDate;
 
     @Column(name = "cancelable", nullable = false)
     private Boolean paid = false;
-
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "purchaseid", nullable = false)
-    private Purchase purchase;
 }

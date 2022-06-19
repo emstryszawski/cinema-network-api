@@ -1,17 +1,23 @@
 package pl.edu.pjatk.cinemanetworkapi.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "screeningroom", indexes = {
         @Index(name = "cinemaid_idx", columnList = "cinemaid")
 })
 public class ScreeningRoom {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "roomnumber", nullable = false)
     private Integer roomNumber;
@@ -30,5 +36,5 @@ public class ScreeningRoom {
     private Set<Seat> seats = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "screeningRoom")
-    private Set<Repertoir> repertoires = new LinkedHashSet<>();
+    private Set<Repertoire> repertoires = new LinkedHashSet<>();
 }

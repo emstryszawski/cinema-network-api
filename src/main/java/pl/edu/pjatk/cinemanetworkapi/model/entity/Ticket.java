@@ -1,8 +1,16 @@
 package pl.edu.pjatk.cinemanetworkapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "ticket", indexes = {
         @Index(name = "tickettypediscountid_idx", columnList = "tickettypediscountid"),
         @Index(name = "ticketpurchaseid_idx", columnList = "purchaseid"),
@@ -12,26 +20,33 @@ import javax.persistence.*;
 })
 public class Ticket {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cinemaid", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "cinemaid", nullable = true)
     private Cinema cinema;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "repertoirid", nullable = false)
-    private Repertoir repertoir;
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "repertoirid", nullable = true)
+    private Repertoire repertoire;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "purchaseid", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "purchaseid", nullable = true)
+    @JsonIgnore
     private Purchase purchase;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "tickettypediscountid", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "tickettypediscountid", nullable = true)
     private TicketTypeDiscount ticketTypeDiscount;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "seatbookingid", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "seatbookingid", nullable = true)
+    @JsonIgnore
     private SeatBooking seatBooking;
+
+    @Column(name = "correlationid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long correlationId;
 }

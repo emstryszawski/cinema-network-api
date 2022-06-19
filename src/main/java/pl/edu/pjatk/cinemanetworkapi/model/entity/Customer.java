@@ -1,15 +1,21 @@
 package pl.edu.pjatk.cinemanetworkapi.model.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "customer")
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "firstname", nullable = false, length = 50)
     private String firstname;
@@ -24,8 +30,5 @@ public class Customer {
     private String phoneNumber;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "customer")
-    private Registereduser registeredUser;
-
-    @OneToMany(mappedBy = "customer")
-    private Set<Purchase> purchases = new LinkedHashSet<>();
+    private RegisteredUser registeredUser;
 }

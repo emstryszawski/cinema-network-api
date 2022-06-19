@@ -1,5 +1,6 @@
 package pl.edu.pjatk.cinemanetworkapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +17,9 @@ import java.util.Set;
 public class Movie {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "title", nullable = false, length = 35)
+    @Column(name = "title", nullable = false, length = 100)
     private String title;
 
     @Column(name = "description", length = 2056)
@@ -44,5 +45,6 @@ public class Movie {
     private String pathToFilmWeb;
 
     @OneToMany(mappedBy = "movie")
-    private Set<Repertoir> repertoires = new LinkedHashSet<>();
+    @JsonIgnore
+    private Set<Repertoire> repertoires = new LinkedHashSet<>();
 }

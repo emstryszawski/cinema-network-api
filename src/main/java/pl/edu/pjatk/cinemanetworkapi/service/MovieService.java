@@ -1,5 +1,6 @@
 package pl.edu.pjatk.cinemanetworkapi.service;
 
+
 import org.springframework.stereotype.Service;
 import pl.edu.pjatk.cinemanetworkapi.model.entity.Movie;
 import pl.edu.pjatk.cinemanetworkapi.model.repository.MovieRepository;
@@ -18,7 +19,7 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Movie getMovie(int id) {
+    public Movie getMovie(Long id) {
         return movieRepository.findById(id).orElse(null);
     }
 }

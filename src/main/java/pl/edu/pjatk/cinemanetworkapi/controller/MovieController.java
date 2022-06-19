@@ -28,7 +28,7 @@ public class MovieController {
     }
 
     @GetMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<Movie> getMovie(@PathVariable int id) {
+    public ResponseEntity<Movie> getMovie(@PathVariable Long id) {
         return ResponseEntity.ok(movieService.getMovie(id));
     }
 }

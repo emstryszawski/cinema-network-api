@@ -1,6 +1,8 @@
 package pl.edu.pjatk.cinemanetworkapi.model.entity;
 
-import pl.edu.pjatk.cinemanetworkapi.model.ScreeningTypeEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,19 +10,21 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "repertoir", indexes = {
         @Index(name = "movieid_idx", columnList = "movieid"),
         @Index(name = "repertoirscreeningroomid_idx", columnList = "screeningroomid"),
         @Index(name = "repertoircinemaid_idx", columnList = "cinemaid")
 })
-public class Repertoir {
+public class Repertoire {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "screeningtype", nullable = false, length = 2)
-    private ScreeningTypeEnum screeningType;
+    private String screeningType;
 
     @Column(name = "startdatetime", nullable = false)
     private LocalDateTime startDateTime;
@@ -46,19 +50,22 @@ public class Repertoir {
     @Column(name = "bookingpossible")
     private Boolean bookingpossible;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "cinemaid", nullable = false)
+    @JsonIgnore
     private Cinema cinema;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "screeningroomid", nullable = false)
+    @JsonIgnore
     private ScreeningRoom screeningRoom;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "movieid", nullable = false)
     private Movie movie;
 
-    @OneToMany(mappedBy = "repertoir")
+    @OneToMany(mappedBy = "repertoire")
+    @JsonIgnore
     private Set<Ticket> tickets = new LinkedHashSet<>();
 
 }
