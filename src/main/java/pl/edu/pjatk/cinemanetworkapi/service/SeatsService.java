@@ -37,6 +37,7 @@ public class SeatsService {
         List<Seat> allSeats = seatRepository.findAllByScreeningRoomId(screeningRoomId);
         return allSeats.stream()
                 .map(seat -> SeatResponse.builder()
+                        .id(seat.getId())
                         .screeningRoomId(seat.getScreeningRoom().getId())
                         .seatNumber(seat.getSeatNumber())
                         .rowNumber(seat.getRowNumber())

@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class SeatResponse {
+    private Long id;
     private Long screeningRoomId;
     private Integer seatNumber;
     private Integer rowNumber;
