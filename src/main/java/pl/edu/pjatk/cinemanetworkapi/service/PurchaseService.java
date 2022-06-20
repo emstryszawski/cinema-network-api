@@ -1,6 +1,5 @@
 package pl.edu.pjatk.cinemanetworkapi.service;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import pl.edu.pjatk.cinemanetworkapi.model.dto.*;
 import pl.edu.pjatk.cinemanetworkapi.model.entity.*;
@@ -19,31 +18,24 @@ public class PurchaseService {
     private RepertoireRepository repertoireRepository;
     private TicketTypeDiscountRepository discountRepository;
 
-    private ModelMapper mapper;
-
-    private CorrelationService correlationService;
-
     public PurchaseService(PurchaseRepository purchaseRepository,
                            CinemaRepository cinemaRepository,
                            TicketRepository ticketRepository,
                            RepertoireRepository repertoireRepository,
-                           TicketTypeDiscountRepository discountRepository,
-                           CorrelationService correlationService) {
+                           TicketTypeDiscountRepository discountRepository) {
         this.purchaseRepository = purchaseRepository;
         this.cinemaRepository = cinemaRepository;
         this.ticketRepository = ticketRepository;
         this.repertoireRepository = repertoireRepository;
         this.discountRepository = discountRepository;
-        this.correlationService = correlationService;
-
-        this.mapper = new ModelMapper();
     }
 
     public Purchase createPurchase() {
         Purchase purchase = new Purchase();
-        purchase.setCorrelationId(correlationService.getCorrelationId());
         purchase.setPurchasedate(LocalDateTime.now());
         purchase.setTickets(new ArrayList<>());
+        Purchase savedPurchase = purchaseRepository.save(purchase);
+        purchase.setCorrelationId(savedPurchase.getId());
         purchaseRepository.save(purchase);
         return purchase;
     }
@@ -139,6 +131,6 @@ public class PurchaseService {
 
     private Double calculatePriceForTickets(int numberOfTickets, Integer discountValue) {
         if (discountValue == 0) return numberOfTickets * 25.0;
-        return (25.0 * (discountValue / 100.0)) * numberOfTickets;
+        return (25.0 * ((100 - discountValue) / 100.0)) * numberOfTickets;
     }
 }

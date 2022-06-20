@@ -47,6 +47,5 @@ public class Ticket {
     private SeatBooking seatBooking;
 
     @Column(name = "correlationid")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long correlationId;
 }

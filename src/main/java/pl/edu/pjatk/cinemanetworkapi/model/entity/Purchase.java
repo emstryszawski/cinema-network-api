@@ -43,6 +43,5 @@ public class Purchase {
     private List<Ticket> tickets;
 
     @Column(name = "correlationid")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long correlationId;
 }
